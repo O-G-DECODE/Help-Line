@@ -1,12 +1,16 @@
 package com.example.helplineapp.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.example.helplineapp.ui.components.StylishButton
+import com.example.helplineapp.ui.components.StylishTextField
 
 @Composable
 fun RegisterScreen(
@@ -20,52 +24,65 @@ fun RegisterScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .background(MaterialTheme.colorScheme.background)
+            .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text = "Register", style = MaterialTheme.typography.headlineMedium)
-        Spacer(modifier = Modifier.height(32.dp))
+        Text(
+            text = "Create Account", 
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.primary,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = "Join our mutual help community",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
+        )
+        Spacer(modifier = Modifier.height(48.dp))
 
-        OutlinedTextField(
+        StylishTextField(
             value = name,
             onValueChange = { name = it },
-            label = { Text("Full Name") },
-            modifier = Modifier.fillMaxWidth()
+            label = "Full Name"
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        OutlinedTextField(
+        StylishTextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text("Email") },
-            modifier = Modifier.fillMaxWidth()
+            label = "Email Address"
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        OutlinedTextField(
+        StylishTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Password") },
-            visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth()
+            label = "Password",
+            visualTransformation = PasswordVisualTransformation()
         )
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(40.dp))
 
-        Button(
+        StylishButton(
+            text = "Register",
             onClick = { 
                 // Placeholder for actual registration logic
                 onRegisterSuccess(1L) 
             },
             modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Register")
-        }
+        )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         TextButton(onClick = onNavigateToLogin) {
-            Text("Already have an account? Login")
+            Text(
+                "Already have an account? Login",
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.labelMedium
+            )
         }
     }
 }
+

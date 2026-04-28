@@ -1,12 +1,16 @@
 package com.example.helplineapp.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.example.helplineapp.ui.components.StylishButton
+import com.example.helplineapp.ui.components.StylishTextField
 
 @Composable
 fun LoginScreen(
@@ -19,45 +23,57 @@ fun LoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .background(MaterialTheme.colorScheme.background)
+            .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text = "Login", style = MaterialTheme.typography.headlineMedium)
-        Spacer(modifier = Modifier.height(32.dp))
+        Text(
+            text = "Welcome Back", 
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.primary,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = "Login to continue helping and requesting",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
+        )
+        Spacer(modifier = Modifier.height(48.dp))
 
-        OutlinedTextField(
+        StylishTextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text("Email") },
-            modifier = Modifier.fillMaxWidth()
+            label = "Email Address"
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        OutlinedTextField(
+        StylishTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Password") },
-            visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth()
+            label = "Password",
+            visualTransformation = PasswordVisualTransformation()
         )
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(40.dp))
 
-        Button(
+        StylishButton(
+            text = "Log In",
             onClick = { 
                 // Placeholder for actual authentication logic
-                // e.g., viewModel.login(email, password)
                 onLoginSuccess(1L) // Simulated User ID
             },
             modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Login")
-        }
+        )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         TextButton(onClick = onNavigateToRegister) {
-            Text("Don't have an account? Register")
+            Text(
+                "Don't have an account? Register",
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.labelMedium
+            )
         }
     }
 }
