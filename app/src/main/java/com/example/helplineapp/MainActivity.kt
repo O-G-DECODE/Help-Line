@@ -13,46 +13,44 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.room.Room
-import com.example.helplineapp.data.local.AppDatabase
-import com.example.helplineapp.repository.AppRepository
 import com.example.helplineapp.ui.MainViewModel
-import com.example.helplineapp.ui.screens.DashboardScreen
 import com.example.helplineapp.ui.screens.LoginScreen
 import com.example.helplineapp.ui.screens.RegisterScreen
+import com.example.helplineapp.ui.screens.SplashScreen
 import com.example.helplineapp.ui.theme.HelpLineAppTheme
 
 enum class Screen {
+    SPLASH,
     LOGIN,
     REGISTER,
-    DASHBOARD
+    MAIN
 }
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // Initialize Room DB, Repository, and ViewModel
-        val db = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java, "helpline-db"
-        ).build()
-        val repository = AppRepository(db.appDao())
-        val viewModel = MainViewModel(repository)
+        // Initialize pure UI ViewModel
+        val viewModel = MainViewModel()
 
         enableEdgeToEdge()
         setContent {
             HelpLineAppTheme {
-                var currentScreen by remember { mutableStateOf(Screen.LOGIN) }
+                var currentScreen by remember { mutableStateOf(Screen.SPLASH) }
 
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Box(modifier = Modifier.padding(innerPadding)) {
                         when (currentScreen) {
+                            Screen.SPLASH -> {
+                                SplashScreen(onSplashComplete = {
+                                    currentScreen = Screen.LOGIN
+                                })
+                            }
                             Screen.LOGIN -> {
                                 LoginScreen(
                                     onLoginSuccess = { userId ->
                                         viewModel.loginSimulated(userId)
-                                        currentScreen = Screen.DASHBOARD
+                                        currentScreen = Screen.MAIN
                                     },
                                     onNavigateToRegister = {
                                         currentScreen = Screen.REGISTER
@@ -63,17 +61,22 @@ class MainActivity : ComponentActivity() {
                                 RegisterScreen(
                                     onRegisterSuccess = { userId ->
                                         viewModel.loginSimulated(userId)
-                                        currentScreen = Screen.DASHBOARD
+                                        currentScreen = Screen.MAIN
                                     },
                                     onNavigateToLogin = {
                                         currentScreen = Screen.LOGIN
                                     }
                                 )
                             }
-                            Screen.DASHBOARD -> {
-                                DashboardScreen(viewModel = viewModel)
+                            Screen.MAIN -> {
+                                // For MAIN screen, we don't need the Box padding as MainAppScreen has its own Scaffold
                             }
                         }
+                    }
+                    
+                    if (currentScreen == Screen.MAIN) {
+                        // Place MainAppScreen outside the padded box to allow it to draw edge-to-edge correctly
+                        com.example.helplineapp.ui.screens.MainAppScreen(viewModel = viewModel)
                     }
                 }
             }

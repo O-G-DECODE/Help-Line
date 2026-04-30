@@ -1,6 +1,5 @@
 package com.example.helplineapp.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -12,25 +11,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = LightSageGreen,
-    secondary = SageGreen,
-    tertiary = DarkSageGreen,
-    background = DarkCharcoal,
-    surface = DarkCharcoal,
-    onPrimary = DarkCharcoal,
-    onBackground = WarmWhite,
-    onSurface = WarmWhite
+    primary = TealPrimary,
+    secondary = TealDark,
+    tertiary = LightGray,
+    background = TextPrimary,
+    surface = TextPrimary,
+    onPrimary = White,
+    onBackground = SoftBlue,
+    onSurface = SoftBlue
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = SageGreen,
-    secondary = LightSageGreen,
-    tertiary = DarkSageGreen,
-    background = WarmWhite,
-    surface = SurfaceWhite,
-    onPrimary = SurfaceWhite,
-    onBackground = DarkCharcoal,
-    onSurface = DarkCharcoal
+    primary = TealPrimary,
+    secondary = TealDark,
+    tertiary = LightGray,
+    background = SoftBlue,
+    surface = White,
+    onPrimary = White,
+    onBackground = TextPrimary,
+    onSurface = TextPrimary
 )
 
 @Composable
