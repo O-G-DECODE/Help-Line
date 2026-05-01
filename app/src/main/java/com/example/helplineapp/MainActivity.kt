@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity() {
                     Box(modifier = Modifier.padding(innerPadding)) {
                         when (currentScreen) {
                             Screen.SPLASH -> {
-                                SplashScreen(onSplashComplete = {
+                                SplashScreen(onAnimationFinished = {
                                     currentScreen = Screen.LOGIN
                                 })
                             }
